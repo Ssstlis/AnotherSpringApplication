@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!--<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
+        <property name="show_sql">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <mapping class="com.hotel.models.Building"/>
+        <mapping class="com.hotel.models.Client"/>
+        <mapping class="com.hotel.models.ClientOnTicket"/>
+        <mapping class="com.hotel.models.Flour"/>
+        <mapping class="com.hotel.models.Organization"/>
+        <mapping class="com.hotel.models.OrganizationOnFlour"/>
+        <mapping class="com.hotel.models.Room"/>
+        <mapping class="com.hotel.models.Service"/>
+        <mapping class="com.hotel.models.Ticket"/>
+        <mapping class="com.hotel.models.User"/>
+    </session-factory>
+</hibernate-configuration>
