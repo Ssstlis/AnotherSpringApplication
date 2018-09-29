@@ -1,7 +1,6 @@
 package com.hotel.models;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -17,6 +16,7 @@ public class User {
     public String login;
     public String password;
     public Integer privilegies;
+    public Integer activity;
 
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")

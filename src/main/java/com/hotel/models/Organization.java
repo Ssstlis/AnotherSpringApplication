@@ -41,5 +41,5 @@ public class Organization {
             joinColumns = {@JoinColumn(name = "organization_id")},
             inverseJoinColumns = {@JoinColumn(name = "flour_id")}
     )
-    public Set<Organization> organizations;
+    public Set<Flour> organizations;
 }

@@ -2,7 +2,6 @@ package com.hotel.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import javax.persistence.*;
 import java.util.Set;

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = " flour")
+@Table(name = "flour")
 @JsonRootName("flour")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Flour {

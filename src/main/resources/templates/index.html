@@ -11,21 +11,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/login">Войти</a><br/>
-            <a class="nav-item nav-link" href="/logout">Выйти</a><br/>
-            <!--<a class="nav-item nav-link" href="/transactions">Все транзакции</a><br/>-->
-            <!--<a class="nav-item nav-link" href="/sampling">Сделать выборку</a><br/>-->
-            <!--<a class="nav-item nav-link" href="/addTransaction">Сделать перевод</a><br/>-->
-        </div>
-    </div>
-</nav>
+<div th:replace="navbar :: navbar"></div>
 
 <script src="../../jquery-3.3.1.slim.min.js"></script>
 <script src="../../popper.min.js"></script>

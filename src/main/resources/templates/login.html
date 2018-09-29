@@ -18,27 +18,17 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <!--/*@thymesVar id="registerForm" type="com.hotel.forms.Register"*/-->
-            <form th:action="@{/register}" th:object="${registerForm}" method="POST">
-                <input type="hidden" id="mode" name="mode" th:value="${mode}"/>
-                <div class="form-group">
-                    <label for="firstName">Имя:</label>
-                    <input class="form-control" id="firstName" th:field="*{firstName}" required/><br/>
-                </div>
-                <div class="form-group">
-                    <label for="accepterField">Фамилия:</label>
-                    <input class="form-control" id="accepterField" th:field="*{lastName}" required/><br/>
-                </div>
+            <!--/*@thymesVar id="registerForm" type="com.hotel.forms.Login"*/-->
+            <form th:action="@{/login}" th:object="${loginForm}" method="POST">
                 <div class="form-group">
                     <label for="test">Логин:</label>
                     <input class="form-control" id="test" th:field="*{login}" required/><br/>
-                    <small class="form-text text-muted">Будет использоваться для входа.</small>
                 </div>
                 <div class="form-group">
                     <label for="pass">Пароль:</label>
                     <input class="form-control" id="pass" type="password" th:field="*{password}" required/><br/>
                 </div>
-                <input class="btn btn-outline-info" type="submit" value="Зарегистирироваться"/>
+                <input class="btn btn-outline-info" type="submit" value="Войти"/>
             </form>
         </div>
         <div class="col-md-4"></div>

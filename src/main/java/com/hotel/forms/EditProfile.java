@@ -1,12 +1,12 @@
 package com.hotel.forms;
 
-public class Register {
-    protected String firstName;
-    protected String lastName;
-    protected String login;
-    protected String password;
-    protected Integer mode;
-    public Register() {}
+public class EditProfile {
+    private Integer Id;
+    private String firstName;
+    private String lastName;
+    private String login;
+    private String password;
+    public EditProfile() {}
 
     public String getFirstName() {
         return firstName;
@@ -38,5 +38,13 @@ public class Register {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
     }
 }

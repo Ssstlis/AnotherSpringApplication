@@ -1,0 +1,56 @@
+<!-- Thymeleaf Namespace -->
+
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--/*@thymesVar id="title" type="java.lang.String"*/-->
+    <title th:utext="${title}">Главная страница</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../bootstrap.min.css">
+
+</head>
+<body>
+
+<div th:replace="navbar :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-7"></div>
+        <div class="col">
+            <!--/*@thymesVar id="editProfileForm" type="com.hotel.forms.EditProfile"*/-->
+            <!--/*@thymesVar id="user" type="com.hotel.models.User"*/-->
+            <form th:action="@{/edit_profile}" th:object="${editProfileForm}" method="POST">
+                <input type="hidden" id="id" name="id" th:value="${user.id}"/>
+                <div class="form-group">
+                    <label for="firstName">Имя:</label>
+                    <input class="form-control" id="firstName" name="firstName" th:value="${user.firstName}"
+                           required/><br/>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Фамилия:</label>
+                    <input class="form-control" id="lastName" name="lastName" th:value="${user.lastName}"
+                           required/><br/>
+                </div>
+                <div class="form-group">
+                    <label for="login">Логин:</label>
+                    <input class="form-control" id="login" name="login" th:value="${user.login}" required/><br/>
+                    <small class="form-text text-muted">Будет использоваться для входа.</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input class="form-control" id="password" type="password" name="password"
+                           th:value="${user.password}" required/><br/>
+                </div>
+                <input class="btn btn-outline-info" type="submit" value="Сохранить"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../jquery-3.3.1.slim.min.js"></script>
+<script src="../../popper.min.js"></script>
+<script src="../../bootstrap.min.js"></script>
+</body>
+</html>

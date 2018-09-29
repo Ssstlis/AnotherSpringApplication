@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "client_on_ticket")
