@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
 </head>
 <body>
-$END$
+
+<div th:fragment="buildings_table">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Звездность</th>
+            <th scope="col">Количество этажей</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="building" type="com.hotel.models.Building"*/-->
+        <!--/*@thymesVar id="buildings" type="java.util.List<com.hotel.models.Building>"*/-->
+        <tr th:each="building : ${buildings}">
+            <th scope="row" th:utext="${building.id}">...</th>
+            <td th:utext="${building.description}">...</td>
+            <td th:utext="${building.stars}">...</td>
+            <td th:utext="${building.floors}">...</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--/*@thymesVar id="buildingForm" type="com.hotel.forms.BuildingForm"*/-->
+<div th:fragment="building_add_form">
+    <form th:action="@{/add_building}" th:object="${buildingForm}" method="POST">
+        <div class="form-group">
+            <label for="description">Описание здания</label>
+            <input class="form-control" id="description" th:field="*{description}" required/><br/>
+        </div>
+        <div class="form-group">
+            <label for="stars">Звездность</label>
+            <select th:field="*{stars}" class="form-control" id="stars">
+                <option th:value="1" th:text="${'1 звезда'}">
+                <option th:each="i : ${#numbers.sequence(2, 4)}" th:value="${i}" th:text="${i}+' звезды'">
+                <option th:value="5" th:text="${'5 звезд'}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="floors">Количество этажей</label>
+            <input class="form-control" id="floors" type="number" min="1" placeholder="1" th:field="*{floors}"/><br/>
+        </div>
+        <input class="btn btn-outline-info" type="submit" value="Сохранить"/>
+    </form>
+</div>
+
+<!--/*@thymesVar id="user" type="com.hotel.models.User"*/-->
+<div th:fragment="sidebar">
+    <div class="btn-group-vertical btn-group-lg">
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/buildings">Список зданий</a>
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/add_building">Добавить здание</a>
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/add_flour">Добавить этаж</a>
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/services">Список сервисов</a>
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/add_service">Добавить сервис</a>
+        <a th:if="${user.privilegies == 3}" type="button" class="btn btn-outline-info" href="/organizations">Организации</a>
+        <a th:if="${user.privilegies == 2}" type="button" class="btn btn-outline-info" href="/service_policy">Политика сервиса</a>
+        <a th:if="${user.privilegies == 2}" type="button" class="btn btn-outline-info" href="/add_flour">Добавить этаж в обсуживание</a>
+        <a type="button" class="btn btn-outline-info" href="/money_become">Прибыль</a>
+        <a type="button" class="btn btn-outline-info" href="/money_spent">Траты</a>
+        <a type="button" class="btn btn-outline-info" href="/tickets">Покупки</a>
+    </div>
+</div>
+
 </body>
 </html>

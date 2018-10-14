@@ -17,7 +17,7 @@ public class ClientOnTicket {
     public Integer id;
 
     @Column(name = "ticket_id")
-    @JsonProperty("tiket_id")
+    @JsonProperty("ticket_id")
     public Integer ticketId;
 
     @Column(name = "client_id")

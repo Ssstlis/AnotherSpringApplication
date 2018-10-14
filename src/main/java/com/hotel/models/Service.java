@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "service")
@@ -21,7 +20,7 @@ public class Service {
     @JsonProperty("basic_price")
     public Integer basicPrice;
 
-    @OneToMany
-    @JoinColumn(name = "service_id")
-    public Set<Organization> organizations;
+//    @OneToMany
+//    @JoinColumn(name = "service_id")
+//    public Set<Organization> organizations;
 }

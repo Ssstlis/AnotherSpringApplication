@@ -4,21 +4,18 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <!--/*@thymesVar id="title" type="java.lang.String"*/-->
-    <title th:utext="${title}">Главная страница</title>
+    <title>Редактирование профиля</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../../bootstrap.min.css">
-
 </head>
 <body>
 
 <div th:replace="navbar :: navbar"></div>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col"></div>
-        <div class="col-7"></div>
-        <div class="col">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
             <!--/*@thymesVar id="editProfileForm" type="com.hotel.forms.EditProfile"*/-->
             <!--/*@thymesVar id="user" type="com.hotel.models.User"*/-->
             <form th:action="@{/edit_profile}" th:object="${editProfileForm}" method="POST">
@@ -26,12 +23,12 @@
                 <div class="form-group">
                     <label for="firstName">Имя:</label>
                     <input class="form-control" id="firstName" name="firstName" th:value="${user.firstName}"
-                           required/><br/>
+                    required/><br/>
                 </div>
                 <div class="form-group">
                     <label for="lastName">Фамилия:</label>
                     <input class="form-control" id="lastName" name="lastName" th:value="${user.lastName}"
-                           required/><br/>
+                    required/><br/>
                 </div>
                 <div class="form-group">
                     <label for="login">Логин:</label>
@@ -41,11 +38,12 @@
                 <div class="form-group">
                     <label for="password">Пароль:</label>
                     <input class="form-control" id="password" type="password" name="password"
-                           th:value="${user.password}" required/><br/>
+                    th:value="${user.password}" required/><br/>
                 </div>
                 <input class="btn btn-outline-info" type="submit" value="Сохранить"/>
             </form>
         </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 

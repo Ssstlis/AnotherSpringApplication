@@ -5,13 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "flour")
-@JsonRootName("flour")
+@Table(name = "floor")
+@JsonRootName("floor")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Flour {
+public class Floor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
@@ -20,13 +19,13 @@ public class Flour {
     @JsonProperty("building_id")
     public Integer buildingId;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    public Building building;
+//    @OneToOne
+//    @JoinColumn(name = "id")
+//    public Building building;
 
 //    @OneToMany
 //    @JoinColumn(name = "flour_id")
-//    public Set<OrganizationOnFlour> organizationsOnFlour;
+//    public Set<OrganizationOnFloor> organizationsOnFlour;
 
 //    @OneToMany
 //    @JoinColumn(name = "flour_id")

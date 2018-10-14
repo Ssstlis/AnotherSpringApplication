@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Set;
+
+import static java.lang.Math.toIntExact;
 
 @Entity
 @Table(name = "ticket")
@@ -16,12 +17,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
     @Column(name = "timestamp_buy")
-    public Long timestampBuy;
+    public Integer timestampBuy;
     @Column(name = "timestamp_start")
-    public Long timestampStart;
+    public Integer timestampStart;
     @Column(name = "timestamp_end")
-    public Long timestampEnd;
-    public Long price;
+    public Integer timestampEnd;
+    public Integer price;
 
     @Transient
     public DateTime dateBuy;
@@ -35,8 +36,8 @@ public class Ticket {
     @Column(name = "user_id")
     public Integer userId;
 
-    @Column(name = "ticket_id")
-    public Integer ticketId;
+//    @Column(name = "ticket_id")
+//    public Integer ticketId;
 
 //    @ManyToOne
 //    @JoinColumn(name = "id")
@@ -46,13 +47,13 @@ public class Ticket {
 //    @JoinColumn(name = "ticket_id")
 //    public Set<ClientOnTicket> clientsOnTicket;
 
-    @ManyToMany
-    @JoinTable(
-            name = "client_on_ticket",
-            joinColumns = {@JoinColumn(name = "ticket_id")},
-            inverseJoinColumns = { @JoinColumn(name = "client_id") }
-    )
-    public Set<Client> clients;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "client_on_ticket",
+//            joinColumns = {@JoinColumn(name = "ticket_id")},
+//            inverseJoinColumns = { @JoinColumn(name = "client_id") }
+//    )
+//    public Set<Client> clients;
 
     public void initTime() {
         dateBuy = new DateTime(timestampBuy);
@@ -61,8 +62,8 @@ public class Ticket {
     }
 
     public void initTime(DateTime startTime, DateTime endTime) {
-        timestampBuy = DateTime.now().getMillis();
-        timestampStart = DateTime.now().getMillis();
-        timestampEnd = DateTime.now().getMillis();
+        timestampBuy = toIntExact(DateTime.now().getMillis());
+        timestampStart = toIntExact(startTime.getMillis());
+        timestampEnd = toIntExact(endTime.getMillis());
     }
 }

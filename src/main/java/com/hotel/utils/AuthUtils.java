@@ -13,8 +13,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,27 +28,61 @@ public class AuthUtils {
         this.userDAO = userDAO;
     }
 
-    public Supplier<ModelAndView> loginView = () -> {
+    private ModelAndView loginView() {
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("loginForm", new Login());
         return new ModelAndView("login", modelMap, HttpStatus.BAD_REQUEST);
-    };
+    }
 
-    private ModelAndView andThen(Session session, HttpServletResponse response, Function<User, ModelAndView> f) {
+    private ModelAndView indexView() {
+        Map<String, Object> modelMap = new HashMap<>();
+        return new ModelAndView("index", modelMap, HttpStatus.BAD_REQUEST);
+    }
+
+    private ModelAndView andThen(Session session, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
         if (session != null  && session.user != null) {
             response.addCookie(session.cookie);
-            return f.apply(session.user);
+            Map<String, Object> modelMap = new HashMap<>();
+            modelMap.put("user", session.user);
+            return f.apply(session.user, modelMap);
         } else {
-            return loginView.get();
+            return loginView();
         }
     }
 
-    public ModelAndView loginAuthAndThen(Login login, HttpServletResponse response, Function<User, ModelAndView> f) {
+    private ModelAndView andThenWith(Session session, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f, Predicate<User> p) {
+        if (session != null  && session.user != null) {
+            response.addCookie(session.cookie);
+            Map<String, Object> modelMap = new HashMap<>();
+            modelMap.put("user", session.user);
+            if (p.test(session.user)) {
+                return f.apply(session.user, modelMap);
+            } else {
+                return indexView();
+            }
+        } else {
+            return loginView();
+        }
+    }
+
+    public ModelAndView loginAuthAndThen(Login login, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
         return andThen(getSession(login), response, f);
     }
 
-    public ModelAndView authAndThen(HttpServletRequest request, HttpServletResponse response, Function<User, ModelAndView> f) {
+    public ModelAndView authAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
         return andThen(authAction(request), response, f);
+    }
+
+    public ModelAndView authOrganizationAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
+        return andThenWith(authAction(request), response, f, (user) -> user.privilegies == 2);
+    }
+
+    public ModelAndView authOrganizationOrAdminAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
+        return andThenWith(authAction(request), response, f, (user) -> user.privilegies > 1);
+    }
+
+    public ModelAndView authAdminAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
+        return andThenWith(authAction(request), response, f, (user) -> user.privilegies > 2);
     }
 
     public Session newSession(User user) {

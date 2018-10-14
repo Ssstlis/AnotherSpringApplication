@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "room")
@@ -19,9 +18,9 @@ public class Room {
 
 //    @ManyToOne
 //    @JoinColumn(name = "id")
-//    public Flour flour;
+//    public Floor flour;
 
-    @OneToMany
-    @JoinColumn(name = "room_id")
-    public Set<Ticket> tickets;
+//    @OneToMany
+//    @JoinColumn(name = "room_id")
+//    public Set<Ticket> tickets;
 }

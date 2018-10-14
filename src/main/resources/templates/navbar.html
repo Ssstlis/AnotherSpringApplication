@@ -20,13 +20,36 @@
                     <a class="nav-link" href="/logout">Выйти</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Регистрация
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                         <a class="dropdown-item" href="/register?mode=1">Клиента</a>
                         <a class="dropdown-item" href="/register?mode=2">Организации</a>
                         <a class="dropdown-item" href="/register?mode=3">Админа</a>
+                    </div>
+                </li>
+                <li th:if="${user != null}" class="nav-item">
+                    <a th:if="${user.privilegies == 1}" class="nav-link" href="/bin">Мои покупки</a>
+                </li>
+                <li th:if="${user != null}" class="nav-item dropdown">
+                    <a th:if="${user.privilegies == 2 || user.privilegies == 3}"
+                       class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Панель управления
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                        <div th:if="${user.privilegies == 3}">
+                            <div th:replace="navbar :: managebar_admin"></div>
+                        </div>
+                        <div th:if="${user.privilegies == 2}">
+                            <div th:replace="navbar :: managebar_organization"></div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/money_become">Прибыль</a>
+                        <a class="dropdown-item" href="/money_spent">Траты</a>
+                        <a class="dropdown-item" href="/tickets">Покупки</a>
                     </div>
                 </li>
             </ul>
@@ -37,8 +60,20 @@
     </nav>
 </div>
 
+<div th:fragment="managebar_admin">
+    <a class="dropdown-item" href="/buildings">Список зданий</a>
+    <a class="dropdown-item" href="/add_building">Добавить здание</a>
+    <a class="dropdown-item" href="/add_flour">Добавить этаж</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="/services">Список сервисов</a>
+    <a class="dropdown-item" href="/add_service">Добавить сервис</a>
+    <a class="dropdown-item" href="/organizations">Организации</a>
+</div>
 
+<div th:fragment="managebar_organization">
+    <a class="dropdown-item" href="/service_policy">Политика сервиса</a>
+    <a class="dropdown-item" href="/add_flour">Добавить этаж в обсуживание</a>
+</div>
 
 </body>
-
 </html>

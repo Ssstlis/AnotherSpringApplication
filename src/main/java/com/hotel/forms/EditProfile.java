@@ -1,5 +1,9 @@
 package com.hotel.forms;
 
+import com.hotel.models.User;
+
+import static com.hotel.utils.AuthUtils.base64Encode;
+
 public class EditProfile {
     private Integer Id;
     private String firstName;
@@ -46,5 +50,13 @@ public class EditProfile {
 
     public void setId(Integer id) {
         Id = id;
+    }
+
+    public User reGenUser(User user) {
+        user.lastName  = lastName;
+        user.firstName = firstName;
+        user.login     = login;
+        user.password  = base64Encode(password);
+        return user;
     }
 }

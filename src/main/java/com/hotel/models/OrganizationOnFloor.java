@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "organization_on_floor")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonRootName("organization_on_floor")
-public class OrganizationOnFlour {
+public class OrganizationOnFloor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;

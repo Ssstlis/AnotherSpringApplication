@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "organization")
@@ -34,12 +33,12 @@ public class Organization {
 
     //    @OneToMany
 //    @JoinColumn(name = "organization_id")
-//    public Set<OrganizationOnFlour> organizationOnFlours;
-    @ManyToMany
-    @JoinTable(
-            name = "organization_on_flour",
-            joinColumns = {@JoinColumn(name = "organization_id")},
-            inverseJoinColumns = {@JoinColumn(name = "flour_id")}
-    )
-    public Set<Flour> organizations;
+//    public Set<OrganizationOnFloor> organizationOnFlours;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "organization_on_flour",
+//            joinColumns = {@JoinColumn(name = "organization_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "flour_id")}
+//    )
+//    public Set<Floor> organizations;
 }
