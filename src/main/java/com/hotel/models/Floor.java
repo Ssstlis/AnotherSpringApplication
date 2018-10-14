@@ -28,15 +28,15 @@ public class Flour {
 //    @JoinColumn(name = "flour_id")
 //    public Set<OrganizationOnFlour> organizationsOnFlour;
 
-    @OneToMany
-    @JoinColumn(name = "flour_id")
-    public Set<Room> rooms;
-
-    @ManyToMany
-    @JoinTable(
-            name = "organization_on_flour",
-            joinColumns = { @JoinColumn(name = "flour_id") },
-            inverseJoinColumns = { @JoinColumn(name = "organization_id") }
-    )
-    public Set<Organization> organizations;
+//    @OneToMany
+//    @JoinColumn(name = "flour_id")
+//    public Set<Room> rooms;
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "organization_on_flour",
+//            joinColumns = { @JoinColumn(name = "flour_id") },
+//            inverseJoinColumns = { @JoinColumn(name = "organization_id") }
+//    )
+//    public Set<Organization> organizations;
 }

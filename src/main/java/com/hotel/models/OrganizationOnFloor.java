@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "organization_on_flour")
+@Table(name = "organization_on_floor")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonRootName("organization_on_flour")
+@JsonRootName("organization_on_floor")
 public class OrganizationOnFlour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class OrganizationOnFlour {
     @JsonProperty("organization_id")
     public Integer organizationId;
 
-    @Column(name = "flour_id")
-    @JsonProperty("flour_id")
-    public Integer flourId;
+    @Column(name = "floor_id")
+    @JsonProperty("floor_id")
+    public Integer floorId;
 }
