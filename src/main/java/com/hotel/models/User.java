@@ -18,13 +18,6 @@ public class User {
     public Integer privilegies;
     public Integer activity;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    public Set<Ticket> tickets;
-//
-//    @OneToOne
-//    @JoinColumn(name = "organization_id")
-//    public Organization organization;
-
-    public User() {}
+    public User() {
+    }
 }

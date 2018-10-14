@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <!--/*@thymesVar id="editProfileForm" type="com.hotel.forms.EditProfile"*/-->
+            <!--/*@thymesVar id="editProfileForm" type="com.hotel.forms.EditProfileForm"*/-->
             <!--/*@thymesVar id="user" type="com.hotel.models.User"*/-->
             <form th:action="@{/edit_profile}" th:object="${editProfileForm}" method="POST">
                 <input type="hidden" id="id" name="id" th:value="${user.id}"/>

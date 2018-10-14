@@ -23,12 +23,4 @@ public class ClientOnTicket {
     @Column(name = "client_id")
     @JsonProperty("client_id")
     public Integer clientId;
-
-//    @OneToMany()
-//    @JoinColumn(name = "id")
-//    public Set<Client> clients;
-//
-//    @ManyToOne()
-//    @JoinColumn(name = "id")
-//    public Ticket ticket;
 }

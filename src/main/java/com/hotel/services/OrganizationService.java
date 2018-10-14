@@ -19,4 +19,12 @@ public class OrganizationService {
     public List<Organization> all() {
         return organizationDAO.findAll();
     }
+
+    public void save(Organization organization) {
+        organizationDAO.save(organization);
+    }
+
+    public Organization findByUserId(Integer userId) {
+        return organizationDAO.findByUserId(userId);
+    }
 }

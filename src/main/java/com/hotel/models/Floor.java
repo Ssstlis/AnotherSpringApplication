@@ -18,24 +18,4 @@ public class Floor {
     @Column(name = "building_id")
     @JsonProperty("building_id")
     public Integer buildingId;
-
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    public Building building;
-
-//    @OneToMany
-//    @JoinColumn(name = "flour_id")
-//    public Set<OrganizationOnFloor> organizationsOnFlour;
-
-//    @OneToMany
-//    @JoinColumn(name = "flour_id")
-//    public Set<Room> rooms;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "organization_on_flour",
-//            joinColumns = { @JoinColumn(name = "flour_id") },
-//            inverseJoinColumns = { @JoinColumn(name = "organization_id") }
-//    )
-//    public Set<Organization> organizations;
 }

@@ -18,4 +18,8 @@ public class ServiceService {
     public List<Service> all() {
         return serviceDAO.findAll();
     }
+
+    public Service save(Service service) {
+        return serviceDAO.save(service);
+    }
 }

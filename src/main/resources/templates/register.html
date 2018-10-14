@@ -18,7 +18,8 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <!--/*@thymesVar id="registerForm" type="com.hotel.forms.Register"*/-->
+            <div th:if="${registerForm != null}">
+            <!--/*@thymesVar id="registerForm" type="com.hotel.forms.RegisterForm"*/-->
             <form th:action="@{/register}" th:object="${registerForm}" method="POST">
                 <input type="hidden" id="mode" name="mode" th:value="${mode}"/>
                 <div class="form-group">
@@ -40,6 +41,38 @@
                 </div>
                 <input class="btn btn-outline-info" type="submit" value="Зарегистирироваться"/>
             </form>
+            </div>
+            <div th:if="${organizationForm != null}">
+                <!--/*@thymesVar id="organizationForm" type="com.hotel.forms.RegisterOrganizationForm"*/-->
+                <form th:action="@{/register_organization}" th:object="${organizationForm}" method="POST">
+                    <input type="hidden" id="mode" name="mode" th:value="${mode}"/>
+                    <div class="form-group">
+                        <label for="firstName">Имя:</label>
+                        <input class="form-control" id="firstName" th:field="*{firstName}" required/><br/>
+                    </div>
+                    <div class="form-group">
+                        <label for="accepterField">Фамилия:</label>
+                        <input class="form-control" id="accepterField" th:field="*{lastName}" required/><br/>
+                    </div>
+                    <div class="form-group">
+                        <label for="test">Логин:</label>
+                        <input class="form-control" id="test" th:field="*{login}" required/><br/>
+                        <small class="form-text text-muted">Будет использоваться для входа.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Пароль:</label>
+                        <input class="form-control" id="pass" type="password" th:field="*{password}" required/><br/>
+                    </div>
+                    <div class="form-group">
+                        <label for="stars">Сервис</label>
+                        <select th:field="*{serviceId}" class="form-control" id="stars">
+                            <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.description}">
+                            </option>
+                        </select>
+                    </div>
+                    <input class="btn btn-outline-info" type="submit" value="Зарегистирироваться"/>
+                </form>
+            </div>
         </div>
         <div class="col-md-4"></div>
     </div>

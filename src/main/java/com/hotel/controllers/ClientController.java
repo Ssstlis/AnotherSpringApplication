@@ -5,7 +5,6 @@ import com.hotel.utils.AuthUtils;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -30,8 +29,7 @@ public class ClientController {
 
     @RequestMapping(value = "/bin", method = RequestMethod.GET)
     public ModelAndView clientBin(HttpServletRequest request, HttpServletResponse response) {
-        return authUtils.authAndThen(request, response, (user, modelMap) -> {
-            return new ModelAndView("userBin", modelMap, HttpStatus.OK);
+        return authUtils.authAndThen(request, response, "userBin", (user, modelMap) -> {
         });
     }
 

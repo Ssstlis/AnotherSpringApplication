@@ -13,10 +13,6 @@ public class Building {
 
     public Integer stars;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "building_id")
-//    public Set<Floor> flours;
-
     @Transient
     public Long floors;
 }

@@ -19,8 +19,4 @@ public class Service {
     @Column(name = "basic_price")
     @JsonProperty("basic_price")
     public Integer basicPrice;
-
-//    @OneToMany
-//    @JoinColumn(name = "service_id")
-//    public Set<Organization> organizations;
 }

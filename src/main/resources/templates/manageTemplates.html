@@ -48,7 +48,7 @@
             <label for="floors">Количество этажей</label>
             <input class="form-control" id="floors" type="number" min="1" placeholder="1" th:field="*{floors}"/><br/>
         </div>
-        <input class="btn btn-outline-info" type="submit" value="Сохранить"/>
+        <input class="btn btn-outline-info" type="submit" value="Добавить"/>
     </form>
 </div>
 
@@ -67,6 +67,119 @@
         <a type="button" class="btn btn-outline-info" href="/money_spent">Траты</a>
         <a type="button" class="btn btn-outline-info" href="/tickets">Покупки</a>
     </div>
+</div>
+
+<div th:fragment="services_table">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Базовая стоимость</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="service" type="com.hotel.models.Service"*/-->
+        <!--/*@thymesVar id="services" type="java.util.List<com.hotel.models.Service>"*/-->
+        <tr th:each="service : ${services}">
+            <th scope="row" th:utext="${service.id}">...</th>
+            <td th:utext="${service.description}">...</td>
+            <td th:utext="${service.basicPrice}">...</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--/*@thymesVar id="serviceForm" type="com.hotel.forms.ServiceForm"*/-->
+<div th:fragment="service_add_form">
+    <form th:action="@{/add_service}" th:object="${serviceForm}" method="POST">
+        <div class="form-group">
+            <label for="description">Описание сервиса</label>
+            <input class="form-control" id="description" th:field="*{description}" required/><br/>
+        </div>
+        <div class="form-group">
+            <label for="floors">Базовая стоимость</label>
+            <input class="form-control" id="floors" type="number" min="1" placeholder="1" th:field="*{basicPrice}"/><br/>
+        </div>
+        <input class="btn btn-outline-info" type="submit" value="Добавить"/>
+    </form>
+</div>
+
+<div th:fragment="organizations_table">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Номер сервиса</th>
+            <th scope="col">Номер пользователя</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="organization" type="com.hotel.models.Organization"*/-->
+        <!--/*@thymesVar id="organizations" type="java.util.List<com.hotel.models.Organization>"*/-->
+        <tr th:each="organization : ${organizations}">
+            <th scope="row" th:utext="${organization.id}">...</th>
+            <td th:utext="${organization.serviceId}">...</td>
+            <td th:utext="${organization.userId}">...</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="floor_manage_admin">
+    <!--/*@thymesVar id="floorAdminForm" type="com.hotel.forms.FloorAdminForm"*/-->
+    <form th:action="@{/add_flour_admin}" th:object="${floorAdminForm}" method="POST">
+        <div class="form-group">
+            <label for="buildingId">Выберите здание</label>
+            <select th:field="*{buildingId}" class="form-control" id="buildingId">
+                <!--/*@thymesVar id="buildings_form" type="java.util.List<com.hotel.models.Building>"*/-->
+                <option th:each="building : ${buildings_form}" th:value="${building.id}" th:text="${building.description}">
+                </option>
+            </select>
+        </div>
+        <input class="btn btn-outline-info" type="submit" value="Добавить этаж"/>
+    </form>
+</div>
+
+<div th:fragment="floor_manage_organization">
+    <!--/*@thymesVar id="floorOrganizationForm" type="com.hotel.forms.FloorOrganizationForm"*/-->
+    <form th:action="@{/add_flour_organization}" th:object="${floorOrganizationForm}" method="POST">
+        <div class="form-group">
+            <label for="floorId">Выберите этаж для добавления сервиса</label>
+            <select th:field="*{floorId}" class="form-control" id="floorId">
+                <!--/*@thymesVar id="floors_form" type="java.util.Map<com.hotel.models.Building, java.util.List<com.hotel.models.Floor>>"*/-->
+                <div th:each="building_with_floors : ${floors_form}">
+                <option th:each="floor : ${building_with_floors.getValue()}" th:value="${floor.id}"
+                        th:text="${building_with_floors.getKey().description}+', этаж номер'+${floor.id}">
+                </option>
+                </div>
+            </select>
+
+            <div class="form-group">
+                <label for="mult">Множитель стоимости</label>
+                <input class="form-control" id="mult" type="number" min="1" placeholder="1" th:field="*{multipler}"/><br/>
+            </div>
+        </div>
+        <input class="btn btn-outline-info" type="submit" value="Добавить этаж в обслуживание"/>
+    </form>
+</div>
+
+<div th:fragment="service_policy">
+    <!--/*@thymesVar id="servicePolicyForm" type="com.hotel.forms.ServicePolicyForm"*/-->
+    <!--/*@thymesVar id="serviceId" type="java.lang.Integer"*/-->
+    <form th:action="@{/service_policy}" th:object="${servicePolicyForm}" method="POST">
+        <div class="form-group">
+            <label for="serviceId">Выберите сервис</label>
+            <select th:field="*{serviceId}" class="form-control" id="serviceId">
+                <!--/*@thymesVar id="services_form" type="java.util.Map<com.hotel.models.Service, java.lang.Boolean>"*/-->
+                    <option th:each="service : ${services_form.entrySet()}" th:value="${service.getKey().id}"
+                            th:text="${service.getKey().description}"
+                            th:selected="${service.getValue()}">
+                    </option>
+            </select>
+        </div>
+        <input class="btn btn-outline-info" type="submit" value="Изменить сервис"/>
+    </form>
 </div>
 
 </body>

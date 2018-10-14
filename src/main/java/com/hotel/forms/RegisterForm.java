@@ -1,12 +1,12 @@
 package com.hotel.forms;
 
-public class Register {
+public class RegisterForm {
     protected String firstName;
     protected String lastName;
     protected String login;
     protected String password;
     protected Integer mode;
-    public Register() {}
+    public RegisterForm() {}
 
     public String getFirstName() {
         return firstName;

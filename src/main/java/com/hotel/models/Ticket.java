@@ -36,24 +36,8 @@ public class Ticket {
     @Column(name = "user_id")
     public Integer userId;
 
-//    @Column(name = "ticket_id")
-//    public Integer ticketId;
-
-//    @ManyToOne
-//    @JoinColumn(name = "id")
-//    public User user;
-
-//    @OneToMany
-//    @JoinColumn(name = "ticket_id")
-//    public Set<ClientOnTicket> clientsOnTicket;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "client_on_ticket",
-//            joinColumns = {@JoinColumn(name = "ticket_id")},
-//            inverseJoinColumns = { @JoinColumn(name = "client_id") }
-//    )
-//    public Set<Client> clients;
+    @Column(name = "room_id")
+    public Integer roomId;
 
     public void initTime() {
         dateBuy = new DateTime(timestampBuy);

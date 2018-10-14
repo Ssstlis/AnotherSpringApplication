@@ -15,12 +15,4 @@ public class Room {
     public Integer id;
     public Integer capacity;
     public Integer price;
-
-//    @ManyToOne
-//    @JoinColumn(name = "id")
-//    public Floor flour;
-
-//    @OneToMany
-//    @JoinColumn(name = "room_id")
-//    public Set<Ticket> tickets;
 }

@@ -4,13 +4,13 @@ import com.hotel.models.User;
 
 import static com.hotel.utils.AuthUtils.base64Encode;
 
-public class EditProfile {
+public class EditProfileForm {
     private Integer Id;
     private String firstName;
     private String lastName;
     private String login;
     private String password;
-    public EditProfile() {}
+    public EditProfileForm() {}
 
     public String getFirstName() {
         return firstName;

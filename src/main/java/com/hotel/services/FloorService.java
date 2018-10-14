@@ -20,7 +20,13 @@ public class FloorService {
         return floorDAO.findAll();
     }
 
-    public List<Floor> saveAll(Iterable<Floor> floors) {
-        return floorDAO.saveAll(floors);
+    public void saveAll(Iterable<Floor> floors) {
+        floorDAO.saveAll(floors);
     }
+
+    public List<Floor> findByIdsNotIn(List<Integer> ids) {
+        return floorDAO.findByIdNotIn(ids);
+    }
+
+    public Floor save(Floor floor) { return floorDAO.save(floor); }
 }

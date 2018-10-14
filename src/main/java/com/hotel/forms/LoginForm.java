@@ -1,10 +1,10 @@
 package com.hotel.forms;
 
-public class Login {
+public class LoginForm {
     private String login;
     private String password;
 
-    public Login(){}
+    public LoginForm(){}
 
     public String getLogin() {
         return login;

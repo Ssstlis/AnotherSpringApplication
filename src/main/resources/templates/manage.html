@@ -33,6 +33,69 @@
         </div>
         <div class="col-5"></div>
     </div>
+
+    <div th:if="${services != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-8">
+            <div th:replace="manageTemplates :: services_table"></div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div th:if="${serviceForm != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-3"></div>
+        <div class="col-2">
+            <div th:replace="manageTemplates :: service_add_form"></div>
+        </div>
+        <div class="col-5"></div>
+    </div>
+
+    <div th:if="${organizations != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-8">
+            <div th:replace="manageTemplates :: organizations_table"></div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+    <div th:if="${floorOrganizationForm != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-3"></div>
+        <div class="col-2">
+            <div th:replace="manageTemplates :: floor_manage_organization"></div>
+        </div>
+        <div class="col-5"></div>
+    </div>
+
+    <div th:if="${floorAdminForm != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-3"></div>
+        <div class="col-2">
+            <div th:replace="manageTemplates :: floor_manage_admin"></div>
+        </div>
+        <div class="col-5"></div>
+    </div>
+
+    <div th:if="${servicePolicyForm != null}" class="row">
+        <div class="col-2">
+            <!--<div th:replace="manageTemplates :: sidebar"></div>-->
+        </div>
+        <div class="col-3"></div>
+        <div class="col-2">
+            <div th:replace="manageTemplates :: service_policy"></div>
+        </div>
+        <div class="col-5"></div>
+    </div>
 </div>
 
 <script src="../../jquery-3.3.1.slim.min.js"></script>
