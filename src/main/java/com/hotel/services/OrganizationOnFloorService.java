@@ -17,8 +17,8 @@ public class OrganizationOnFloorService {
         this.organizationOnFloorDAO = organizationOnFloorDAO;
     }
 
-    public List<Integer> findByOrganizationIdIsNot(Integer organizationId) {
-        return organizationOnFloorDAO.findDistinctByOrganizationIdIsNot(organizationId)
+    public List<Integer> findFloorsByOrganizationId(Integer organizationId) {
+        return organizationOnFloorDAO.findAllByOrganizationId(organizationId)
                 .stream()
                 .map(o -> o.floorId)
                 .distinct()
@@ -31,9 +31,5 @@ public class OrganizationOnFloorService {
 
     public void saveAll(Iterable<OrganizationOnFloor> organizationOnFloors) {
         organizationOnFloorDAO.saveAll(organizationOnFloors);
-    }
-
-    public List<OrganizationOnFloor> findAllBydOrganizationId(Integer organizationId) {
-        return organizationOnFloorDAO.findAllByOrganizationId(organizationId);
     }
 }

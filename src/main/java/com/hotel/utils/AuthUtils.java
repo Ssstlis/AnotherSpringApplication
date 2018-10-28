@@ -54,7 +54,14 @@ public class AuthUtils {
 //        }).apply(t);
 //    }
 
-    private <T> ModelAndView andThenWith(Function<T, Session> auth, T t, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f, Predicate<User> p) {
+    private <T> ModelAndView andThenWith(
+            Function<T, Session> auth,
+            T t,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f,
+            Predicate<User> p
+    ) {
         return auth.andThen(session -> {
             Map<String, Object> modelMap = new HashMap<>();
             if (session != null && session.user != null) {
@@ -78,33 +85,50 @@ public class AuthUtils {
         }).apply(t);
     }
 
-    public ModelAndView loginAuthAndThen(LoginForm loginForm, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f) {
+    public ModelAndView loginAuthAndThen(
+            LoginForm loginForm,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f
+    ) {
         return andThenWith(this::getSession, loginForm, response, name, f, (user) -> true);
     }
 
-    public ModelAndView authAndThen(HttpServletRequest request, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f) {
+    public ModelAndView authAndThen(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f
+    ) {
         return andThenWith(this::authAction, request, response, name, f, (user) -> true);
     }
 
-    public ModelAndView authOrganizationOrAdminAndThen(HttpServletRequest request, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f) {
+    public ModelAndView authOrganizationOrAdminAndThen(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f
+    ) {
         return andThenWith(this::authAction, request, response, name, f, (user) -> user.privilegies > 1);
     }
 
-    public ModelAndView authOrganizationAndThen(HttpServletRequest request, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f) {
+    public ModelAndView authOrganizationAndThen(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f
+    ) {
         return andThenWith(this::authAction, request, response, name, f, (user) -> user.privilegies == 2);
     }
 
-    public ModelAndView authAdminAndThen(HttpServletRequest request, HttpServletResponse response, String name, BiConsumer<User, Map<String, Object>> f) {
+    public ModelAndView authAdminAndThen(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String name,
+            BiConsumer<User, Map<String, Object>> f
+    ) {
         return andThenWith(this::authAction, request, response, name, f, (user) -> user.privilegies == 3);
     }
-//
-//    public ModelAndView authOrganizationOrAdminAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
-//        return andThenWith(authAction(request), response, f, (user) -> user.privilegies > 1);
-//    }
-//
-//    public ModelAndView authAdminAndThen(HttpServletRequest request, HttpServletResponse response, BiFunction<User, Map<String, Object>, ModelAndView> f) {
-//        return andThenWith(authAction(request), response, f, (user) -> user.privilegies > 2);
-//    }
 
     public Session newSession(User user) {
         if (user == null) {

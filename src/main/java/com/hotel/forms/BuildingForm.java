@@ -13,16 +13,6 @@ public class BuildingForm {
     private String description;
     private Integer stars;
 
-    public Integer getFloors() {
-        return floors;
-    }
-
-    public void setFloors(Integer floors) {
-        this.floors = floors;
-    }
-
-    private Integer floors;
-
     public String getDescription() {
         return description;
     }

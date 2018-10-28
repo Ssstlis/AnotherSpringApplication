@@ -18,4 +18,14 @@ public class Floor {
     @Column(name = "building_id")
     @JsonProperty("building_id")
     public Integer buildingId;
+
+    @Transient
+    public Integer oneRooms;
+
+    @Transient
+    public Integer twoRooms;
+
+    @Transient
+    public Integer threeRooms;
+
 }

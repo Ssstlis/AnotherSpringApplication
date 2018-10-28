@@ -1,6 +1,7 @@
 package com.hotel.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "building")
@@ -15,4 +16,7 @@ public class Building {
 
     @Transient
     public Long floors;
+
+    @Transient
+    public List<Floor> Floors;
 }

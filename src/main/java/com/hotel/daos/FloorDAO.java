@@ -8,4 +8,6 @@ import java.util.List;
 public interface FloorDAO extends JpaRepository<Floor, Integer> {
 
     List<Floor> findByIdNotIn(List<Integer> ids);
+
+    List<Floor> findByIdIn(List<Integer> ids);
 }

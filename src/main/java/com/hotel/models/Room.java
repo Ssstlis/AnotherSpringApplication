@@ -15,4 +15,6 @@ public class Room {
     public Integer id;
     public Integer capacity;
     public Integer price;
+    @Column(name = "floor_id")
+    public Integer floorId;
 }

@@ -12,4 +12,6 @@ public interface OrganizationOnFloorDAO extends JpaRepository<OrganizationOnFloo
     List<OrganizationOnFloor> findDistinctByOrganizationIdIsNot(Integer organizationId);
 
     List<OrganizationOnFloor> findAllByOrganizationId(Integer organizationId);
+
+    List<OrganizationOnFloor> findAllByOrganizationIdIsNot(Integer organizationId);
 }

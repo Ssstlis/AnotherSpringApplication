@@ -4,6 +4,7 @@ import com.hotel.forms.*;
 import com.hotel.models.*;
 import com.hotel.services.*;
 import com.hotel.utils.AuthUtils;
+import com.hotel.utils.AuthUtils.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,10 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,9 +25,11 @@ public class ManageController {
     private final BuildingService buildingService;
     private final FloorService floorService;
     private final OrganizationService organizationService;
+    private final RoomService roomService;
     private final TicketService ticketService;
     private final ServiceService serviceService;
     private final OrganizationOnFloorService organizationOnFloorService;
+    private final UserService userService;
 
     @Autowired
     public ManageController(
@@ -35,16 +37,21 @@ public class ManageController {
             BuildingService buildingService,
             FloorService floorService,
             OrganizationService organizationService,
+            RoomService roomService,
             TicketService ticketService,
             ServiceService serviceService,
-            OrganizationOnFloorService organizationOnFloorService) {
+            OrganizationOnFloorService organizationOnFloorService,
+            UserService userService
+    ) {
         this.authUtils = authUtils;
         this.buildingService = buildingService;
         this.floorService = floorService;
         this.organizationService = organizationService;
+        this.roomService = roomService;
         this.ticketService = ticketService;
         this.serviceService = serviceService;
         this.organizationOnFloorService = organizationOnFloorService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
@@ -56,7 +63,9 @@ public class ManageController {
     @RequestMapping(value = "/buildings", method = RequestMethod.GET)
     public ModelAndView buildings(HttpServletRequest request, HttpServletResponse response) {
         return authUtils.authAdminAndThen(request, response, "manage", (user, modelMap) -> {
-            List<Building> buildings = buildingService.buildingsWithFloorCount();
+//            Map<Integer, List<Floor>> map = roomService.allAsFloors();
+
+            List<Building> buildings = buildingService.a();
             modelMap.put("buildings", buildings);
         });
     }
@@ -69,21 +78,25 @@ public class ManageController {
     }
 
     @RequestMapping(value = "/add_building", method = RequestMethod.POST)
-    public ModelAndView addBuilding(@ModelAttribute("buildingForm") BuildingForm buildingForm, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView addBuilding(@ModelAttribute("build  ingForm") BuildingForm buildingForm, HttpServletRequest request, HttpServletResponse response) {
         return authUtils.authAdminAndThen(request, response, "manage", (user, modelMap) -> {
             Building building = new Building();
             building.description = buildingForm.getDescription();
             building.stars = buildingForm.getStars();
-            Integer buildingId = buildingService.save(building).id;
+            buildingService.save(building);
 
-            Set<Floor> floorSet = new HashSet<>();
+            /*Set<Floor> floorSet = new HashSet<>();
             for (int i = 1; i <= buildingForm.getFloors(); i++) {
                 Floor floor = new Floor();
                 floor.buildingId = buildingId;
                 floorSet.add(floor);
             }
-            floorService.saveAll(floorSet);
-            List<Building> buildings = buildingService.buildingsWithFloorCount();
+            floorService.saveAll(floorSet);*/
+
+//            Map<Integer, List<Floor>> map = roomService.allAsFloors();
+
+            List<Building> buildings = buildingService.a();
+
             modelMap.put("buildings", buildings);
             modelMap.put("buildingForm", null);
         });
@@ -120,7 +133,7 @@ public class ManageController {
     @RequestMapping(value = "/organizations", method = RequestMethod.GET)
     public ModelAndView organizations(HttpServletRequest request, HttpServletResponse response) {
         return authUtils.authAdminAndThen(request, response, "manage", (user, modelMap) -> {
-            List<Organization> organizations = organizationService.all();
+            Map<Organization, Tuple<Service, User>> organizations = organizationService.organizationsWithUser();
             modelMap.put("organizations", organizations);
         });
     }
@@ -175,8 +188,7 @@ public class ManageController {
         return authUtils.authOrganizationOrAdminAndThen(request, response, "manage", (user, modelMap) -> {
             if (user.privilegies == 2) {
                 Organization organization = organizationService.findByUserId(user.id);
-                //TODO query
-                List<Integer> floorIds = organizationOnFloorService.findByOrganizationIdIsNot(organization.id);
+                List<Integer> floorIds = organizationOnFloorService.findFloorsByOrganizationId(organization.id);
                 List<Floor> floorServiceByIdsNotIn = floorService.findByIdsNotIn(floorIds);
                 Map<Building, List<Floor>> unavailableBuildings = buildingService.unavailableBuildings(floorServiceByIdsNotIn);
                 modelMap.put("floors_form", unavailableBuildings);
@@ -194,8 +206,55 @@ public class ManageController {
             Integer buildingId = floorAdminForm.buildingId;
             Floor floor = new Floor();
             floor.buildingId = buildingId;
-            floorService.save(floor);
-            List<Building> buildings = buildingService.buildingsWithFloorCount();
+            Integer floorId = floorService.save(floor).id;
+            List<Room> rooms = new ArrayList<>();
+            for (int i = 1; i <= floorAdminForm.oneRooms; i++) {
+                Room room = new Room();
+                room.capacity = 1;
+                room.price = 250;
+                room.floorId = floorId;
+                rooms.add(room);
+            }
+            for (int i = 1; i <= floorAdminForm.twoRooms; i++) {
+                Room room = new Room();
+                room.capacity = 2;
+                room.price = 450;
+                room.floorId = floorId;
+                rooms.add(room);
+            }
+            for (int i = 1; i <= floorAdminForm.threeRooms; i++) {
+                Room room = new Room();
+                room.capacity = 3;
+                room.price = 700;
+                room.floorId = floorId;
+                rooms.add(room);
+            }
+
+            roomService.saveAll(rooms);
+
+
+
+            List<Building> buildings = buildingService.a();
+
+           /* List<Integer> floorIds = floorService.all()
+                    .stream()
+                    .map(f -> f.id)
+                    .collect(Collectors.toList());
+
+            Map<Integer, List<Floor>> floorsByBuildingId = floorService.findAllByIds(floorIds)
+                    .stream()
+                    .collect(Collectors.groupingBy(f -> f.buildingId));
+
+            List<Building> buildings = buildingService.all()
+                    .stream()
+                    .peek(b -> {
+                        b.Floors = floorsByBuildingId.get(b.id)
+                                .stream()
+                                .sorted(Comparator.comparingInt(f -> f.id))
+                                .collect(Collectors.toList());
+                    })
+                    .collect(Collectors.toList());*/
+
             modelMap.put("buildings", buildings);
             modelMap.put("floorAdminForm", null);
         });
@@ -206,7 +265,7 @@ public class ManageController {
         return authUtils.authOrganizationOrAdminAndThen(request, response, "manage", (user, modelMap) -> {
             Organization organization = organizationService.findByUserId(user.id);
             Integer floorId = floorOrganizationForm.floorId;
-            Float multipler = (float) (floorOrganizationForm.multipler / 100);
+            Float multipler = floorOrganizationForm.multipler / 100f;
             OrganizationOnFloor organizationOnFloor = new OrganizationOnFloor();
             organizationOnFloor.floorId = floorId;
             organizationOnFloor.multipler = multipler;
@@ -215,6 +274,17 @@ public class ManageController {
             List<Service> services = serviceService.all();
             modelMap.put("services", services);
             modelMap.put("floorOrganizationForm", null);
+        });
+    }
+
+    @RequestMapping(value = "/organization_floors", method = RequestMethod.GET)
+    public ModelAndView organizationFloors(HttpServletRequest request, HttpServletResponse response) {
+        return authUtils.authOrganizationAndThen(request, response, "manage", (user, modelMap) -> {
+            Organization organization = organizationService.findByUserId(user.id);
+            List<Integer> floorIds = organizationOnFloorService.findFloorsByOrganizationId(organization.id);
+            List<Floor> floors = floorService.findAllByIds(floorIds);
+            modelMap.put("floors", floors);
+            modelMap.put("servicePolicyForm", null);
         });
     }
 }

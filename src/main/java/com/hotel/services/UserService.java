@@ -5,6 +5,7 @@ import com.hotel.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,8 @@ public class UserService {
     public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
+
+    public List<User> all() { return userDAO.findAll(); }
 
     public User save(User user) {
         return userDAO.save(user);
